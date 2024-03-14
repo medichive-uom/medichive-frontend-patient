@@ -1,47 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import DropDown from "../../components/dropDown";
-import { Button } from "antd";
+import { Button, Layout, Table } from "antd";
 import { DatePicker } from "antd";
 
 const BookAppointment: React.FC = () => {
-  
-  const doctorsList = [
-    { key: '1', label: 'Doctor 1' },
-    { key: '2', label: 'Doctor 2' },
-    { key: '3', label: 'Doctor 3' },
-  ];
+  const [searchPerformed, setSearchPerformed] = useState<boolean>(false);
 
-  const instituteList = [
-    { key: '1', label: 'Institute 1' },
-    { key: '2', label: 'Institute 2' },
-    { key: '3', label: 'Institute 3' },
-  ];
-
-  const specializations = [
-    { key: '1', label: 'Specialization 1' },
-    { key: '2', label: 'Specialization 2' },
-    { key: '3', label: 'Specialization 3' },
-  ];
-  
-  return (
-    <div>
-      <h2>Book Appointments</h2>
-      <div style={{ marginBottom: '20px' }}>
-        <DropDown items={doctorsList} buttonText="Doctor" width="200px" />
-      </div>
-      <div style={{ marginBottom: '20px' }}>
-        <DropDown items={instituteList} buttonText="Institute" width="200px" />
-      </div>
-      <div style={{ marginBottom: '20px' }}>
-        <DropDown items={specializations} buttonText="Specialization" width="200px" />
-      </div>
-      <div style={{ marginBottom: '20px' , width: '200px' }}> 
-        <DatePicker style={{ width: '100%' }} /> 
-      </div>
-      <Button type="primary">Search</Button>
-    </div>
-
-  );
+  const handleSearch = () => {
+    // Logic for performing the search goes here
+    setSearchPerformed(true); // Set the state to indicate that the search has been performed
   };
+
+  const data = [
+    { key: '1', name: 'Dr. John Doe', specialization: 'Cardiologist' },
+    { key: '2', name: 'Dr. Jane Smith', specialization: 'Neurologist' },
+  ];
+
+  return (
+    <Layout style={{ backgroundColor: 'white'}}>
+      <h2>Book Appointments</h2>
+      <DropDown></DropDown>
+      <Layout style={{ marginTop: '10px' , width: '200px',backgroundColor: 'white' }}> 
+        <DatePicker style={{ width: '100%' }} /> 
+      </Layout>
+      <Button style={{ marginTop: '10px',width:'200px'}} type="primary" onClick={handleSearch}>Search</Button>
+
+      {searchPerformed && (
+        <Layout style={{ backgroundColor: 'white'}}>
+          {/* Additional content to display after the search */}
+          <h3>Available Doctors</h3>
+          <Table
+            dataSource={data}
+            bordered
+            title={() => 'Asiri Institute'}
+            columns={[
+              { title: 'Name', dataIndex: 'name', render: (text) => <a>{text}</a> },
+              { title: 'Specialization', dataIndex: 'specialization'},
+              {
+                render: () => (
+                  <Button type="primary">Book</Button>
+                ),
+              },
+            ]}
+          />
+        </Layout>
+      )}
+    </Layout>
+  );
+};
 
 export default BookAppointment;
