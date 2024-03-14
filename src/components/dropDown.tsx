@@ -1,39 +1,45 @@
-import React from 'react';
-import { Dropdown, Button, Space, message, Menu } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import {  Select, Space } from 'antd';
+import type { ConfigProviderProps, SelectProps } from 'antd';
 
-interface DropDownProps {
-  items: { key: string; label: string }[];
-  buttonText: string;
-  width?: string; // Make width prop optional
+type SizeType = ConfigProviderProps['componentSize'];
+
+const options: SelectProps['options'] = [];
+
+for (let i = 10; i < 36; i++) {
+  options.push({
+    value: i.toString(36) + i,
+    label: i.toString(36) + i,
+  });
 }
 
-const handleMenuClick = (e: any) => {
-  message.info(`Clicked on menu item ${e.key}`);
-  console.log('Clicked on menu item:', e);
-};
-
-const DropDown: React.FC<DropDownProps> = ({ items, buttonText, width }) => {
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      {items.map(item => (
-        <Menu.Item key={item.key}>
-          {item.label}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
+const DropDown: React.FC = () => {
+  const [size] = useState<SizeType>('middle');
 
   return (
-    <Dropdown overlay={menu}>
-      <Button style={{ width: width }}>
-        <Space>
-          {buttonText}
-          <DownOutlined />
-        </Space>
-      </Button>
-    </Dropdown>
+    <>
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Select
+          size={size}
+          defaultValue="Doctor"
+          style={{ width: 200 }}
+          options={options}
+        />
+       <Select
+          size={size}
+          defaultValue="Institute"
+          style={{ width: 200 }}
+          options={options}
+        />
+       <Select
+          size={size}
+          defaultValue="Specialization"
+          style={{ width: 200 }}
+          options={options}
+        />
+      </Space>
+    </>
   );
-}
+};
 
 export default DropDown;
