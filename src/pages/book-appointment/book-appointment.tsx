@@ -8,6 +8,12 @@ const BookAppointment: React.FC = () => {
   const [showAvailableTimes, setShowAvailableTimes] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [availableDoctors, setAvailableDoctors] = useState<any[]>([]);
+  const fetchData = async () => {
+    // Fetch data from the server
+    const response = await axios.get(`http://localhost:8080/patient/available-doctors?date=${selectedDate}`);
+    console.log(response.data);
+    return response.data;
+  };
     // Logic for performing the search goes here
     setSearchPerformed(true); // Set the state to indicate that the search has been performed
   const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
