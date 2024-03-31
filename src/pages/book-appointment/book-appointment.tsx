@@ -5,8 +5,9 @@ import { DatePicker } from "antd";
 
 const BookAppointment: React.FC = () => {
   const [searchPerformed, setSearchPerformed] = useState<boolean>(false);
-
-  const handleSearch = () => {
+  const [showAvailableTimes, setShowAvailableTimes] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [availableDoctors, setAvailableDoctors] = useState<any[]>([]);
     // Logic for performing the search goes here
     setSearchPerformed(true); // Set the state to indicate that the search has been performed
   };
