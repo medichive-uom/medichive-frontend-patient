@@ -10,12 +10,9 @@ const BookAppointment: React.FC = () => {
   const [availableDoctors, setAvailableDoctors] = useState<any[]>([]);
     // Logic for performing the search goes here
     setSearchPerformed(true); // Set the state to indicate that the search has been performed
+  const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
+    setSelectedDate(Array.isArray(dateString) ? dateString.join('') : dateString);
   };
-
-  const data = [
-    { key: '1', name: 'Dr. John Doe', specialization: 'Cardiologist' },
-    { key: '2', name: 'Dr. Jane Smith', specialization: 'Neurologist' },
-  ];
 
   return (
     <Layout style={{ backgroundColor: 'white'}}>
