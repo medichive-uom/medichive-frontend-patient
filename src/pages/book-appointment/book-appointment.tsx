@@ -25,32 +25,35 @@ const BookAppointment: React.FC = () => {
   };
 
   return (
-    <Layout style={{ backgroundColor: 'white'}}>
+    <Layout style={{ backgroundColor: 'white' }}>
       <h2>Book Appointments</h2>
-      <DropDown></DropDown>
-      <Layout style={{ marginTop: '10px' , width: '200px',backgroundColor: 'white' }}> 
-        <DatePicker style={{ width: '100%' }} /> 
+      <DropDown/>
+      <Layout style={{ marginTop: '10px', width: '200px', backgroundColor: 'white' }}>
+        <DatePicker style={{ width: '100%' }} onChange={onChange} />
       </Layout>
-      <Button style={{ marginTop: '10px',width:'200px'}} type="primary" onClick={handleSearch}>Search</Button>
+      <Button style={{ marginTop: '10px', width: '200px' }} type="primary" onClick={handleSearch}>Search</Button>
 
       {searchPerformed && (
-        <Layout style={{ backgroundColor: 'white'}}>
+        <Layout style={{ backgroundColor: 'white' }}>
           {/* Additional content to display after the search */}
           <h3>Available Doctors</h3>
+          {availableDoctors.map((institute) => (
           <Table
-            dataSource={data}
+          key={institute.instituteDetails.id}
+          dataSource={institute.availableDoctors}
             bordered
-            title={() => 'Asiri Institute'}
+          title={() => `${institute.instituteDetails.instituteName}`}
             columns={[
-              { title: 'Name', dataIndex: 'name', render: (text) => <a>{text}</a> },
-              { title: 'Specialization', dataIndex: 'specialization'},
+            { title: 'Name', dataIndex: 'name', width: 500 },
+            { title: 'Specialization',width: 500, dataIndex: 'specializations', render: (specializations: string[]) => specializations.join(', ') },
               {
-                render: () => (
-                  <Button type="primary">Book</Button>
+              render: (_,record) => (
+                <Button type="primary"  onClick={()=> handleBookAppointment(institute.instituteDetails.id,record.doctorId)}>Book</Button>
                 ),
               },
             ]}
           />
+          ))}
         </Layout>
       )}
     </Layout>
