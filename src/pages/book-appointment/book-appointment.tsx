@@ -14,8 +14,13 @@ const BookAppointment: React.FC = () => {
     console.log(response.data);
     return response.data;
   };
+  const handleSearch = async () => {
     // Logic for performing the search goes here
+    const doctors = await fetchData();
+    setAvailableDoctors(doctors); // Set the available doctors in the state
     setSearchPerformed(true); // Set the state to indicate that the search has been performed
+
+  };
   const handleBookAppointment = (instituteId:number,doctorId:number) => {
     console.log(instituteId,doctorId);
     navigate(`/bookappointment/doctor?instituteId=${instituteId}&doctorId=${doctorId}&date=${selectedDate}`);
