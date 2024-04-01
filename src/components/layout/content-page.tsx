@@ -1,9 +1,5 @@
 import React from "react";
 import { Layout, theme } from "antd";
-import {Route, Routes} from "react-router-dom";
-import Home from "../../pages/home/home";
-import BookAppointment from "../../pages/book-appointment/book-appointment";
-import ViewLabReports from "../../pages/view-labreports/view-labreports";
 import AppRouter from "../../routes/AppRouter";
 
 const { Content } = Layout;
