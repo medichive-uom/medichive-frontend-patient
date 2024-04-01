@@ -11,6 +11,7 @@ const BookAppointment: React.FC = () => {
   const [showAvailableTimes, setShowAvailableTimes] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [availableDoctors, setAvailableDoctors] = useState<any[]>([]);
+  const navigate = useNavigate();
   const fetchData = async () => {
     // Fetch data from the server
     const response = await axios.get(`http://localhost:8080/patient/available-doctors?date=${selectedDate}`);
