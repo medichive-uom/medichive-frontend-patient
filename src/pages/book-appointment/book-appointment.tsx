@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 const BookAppointment: React.FC = () => {
   const [searchPerformed, setSearchPerformed] = useState<boolean>(false);
-  const [showAvailableTimes, setShowAvailableTimes] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [availableDoctors, setAvailableDoctors] = useState<any[]>([]);
   const navigate = useNavigate();
@@ -29,6 +28,14 @@ const BookAppointment: React.FC = () => {
     console.log(instituteId,doctorId);
     navigate(`/bookappointment/doctor?instituteId=${instituteId}&doctorId=${doctorId}&date=${selectedDate}`);
   };
+  // const fetchAllDoctors = async () => {
+  //   // Fetch data from the server
+  //   const response = await axios.get(`http://localhost:8080/patient/doctors`);
+  //   console.log(response.data);
+  //   return response.data;
+  // }
+
+
   const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
     setSelectedDate(Array.isArray(dateString) ? dateString.join('') : dateString);
   };
@@ -50,18 +57,18 @@ const BookAppointment: React.FC = () => {
           <Table
           key={institute.instituteDetails.id}
           dataSource={institute.availableDoctors}
-            bordered
+          bordered
           title={() => `${institute.instituteDetails.instituteName}`}
-            columns={[
+          columns={[
             { title: 'Name', dataIndex: 'name', width: 500 },
             { title: 'Specialization',width: 500, dataIndex: 'specializations', render: (specializations: string[]) => specializations.join(', ') },
-              {
+            {
               render: (_,record) => (
                 <Button type="primary"  onClick={()=> handleBookAppointment(institute.instituteDetails.id,record.doctorId)}>Book</Button>
-                ),
-              },
-            ]}
-          />
+              ),
+            },
+          ]}
+        />
           ))}
         </Layout>
       )}
