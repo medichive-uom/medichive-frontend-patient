@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BookFilled,
   ExperimentFilled,
@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Typography } from "antd";
 import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const { Title } = Typography;
 const { Sider } = Layout;
@@ -22,6 +22,31 @@ const items = [HomeFilled, BookFilled, ExperimentFilled, LogoutOutlined].map(
 );
 
 const Sidebar: React.FC = () => {
+  const [selectedKey, setSelectedKey] = useState<string>("1");
+  const location = useLocation();
+
+  useEffect(() => {
+    // Retrieve selected key from local storage
+    const storedKey = localStorage.getItem("selectedKey");
+    if (storedKey) {
+      setSelectedKey(storedKey);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update selected key when location changes
+    const menuItem = items.find(item => item.path === location.pathname);
+    if (menuItem) {
+      setSelectedKey(menuItem.key);
+    }
+  }, [location.pathname]);
+
+  const handleMenuClick = (key: string) => {
+    // Store selected key in local storage
+    localStorage.setItem("selectedKey", key);
+    setSelectedKey(key);
+  };
+
   return (
     <Sider breakpoint="lg" collapsedWidth="0" style={{ minHeight: "100vh" }}>
       <Title
@@ -35,9 +60,9 @@ const Sidebar: React.FC = () => {
       >
         MEDICHIVE
       </Title>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
+      <Menu theme="dark" mode="inline" selectedKeys={[selectedKey]}>
         {items.map((item) => (
-          <Menu.Item key={item.key} icon={item.icon}>
+          <Menu.Item key={item.key} icon={item.icon} onClick={() => handleMenuClick(item.key)}>
             <Link to={item.path}>{item.label}</Link>
           </Menu.Item>
         ))}
