@@ -16,6 +16,10 @@ const BookAppointment: React.FC = () => {
   };
     // Logic for performing the search goes here
     setSearchPerformed(true); // Set the state to indicate that the search has been performed
+  const handleBookAppointment = (instituteId:number,doctorId:number) => {
+    console.log(instituteId,doctorId);
+    navigate(`/bookappointment/doctor?instituteId=${instituteId}&doctorId=${doctorId}&date=${selectedDate}`);
+  };
   const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
     setSelectedDate(Array.isArray(dateString) ? dateString.join('') : dateString);
   };
