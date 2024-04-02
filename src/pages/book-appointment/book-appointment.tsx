@@ -7,28 +7,34 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const BookAppointment: React.FC = () => {
+  // State variables
   const [searchPerformed, setSearchPerformed] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [availableDoctors, setAvailableDoctors] = useState<any[]>([]);
   const navigate = useNavigate();
+
+  // Function to fetch available doctors based on selected date
   const fetchData = async () => {
-    // Fetch data from the server
     const response = await axios.get(`http://localhost:8080/patient/available-doctors?date=${selectedDate}`);
     console.log(response.data);
     return response.data;
   };
+
+  // Function to handle search action
   const handleSearch = async () => {
-    // Logic for performing the search goes here
     const doctors = await fetchData();
     setAvailableDoctors(doctors); // Set the available doctors in the state
     setSearchPerformed(true); // Set the state to indicate that the search has been performed
 
   };
+
+  // Function to handle booking appointment
   const handleBookAppointment = (instituteId:number,doctorId:number) => {
     console.log(instituteId,doctorId);
     navigate(`/bookappointment/doctor?instituteId=${instituteId}&doctorId=${doctorId}&date=${selectedDate}`);
   };
 
+  // Function to handle date change in DatePicker
   const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
     setSelectedDate(Array.isArray(dateString) ? dateString.join('') : dateString);
   };
