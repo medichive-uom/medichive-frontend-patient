@@ -80,11 +80,11 @@ const AvailableTimes: React.FC = () => {
       {profile && <Card
         hoverable
         style={{ width: 240, margin: 'auto' }}
-        cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+        cover={<img src={'/doc_image.jpg'} alt="My Photo" /> }
       >
         <Meta title={profile.name} />
         {profile.specializations && profile.specializations.map((specialization: any) =>
-          <p>{specialization.name}</p>)
+          <p key={specialization.id}>{specialization.name}</p>)
         }
       </Card>}
       <Divider />
