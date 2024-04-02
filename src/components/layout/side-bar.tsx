@@ -22,7 +22,7 @@ const items = [HomeFilled, BookFilled, ExperimentFilled, LogoutOutlined].map(
 );
 
 const Sidebar: React.FC = () => {
-  const [selectedKey, setSelectedKey] = useState<string>("1");
+  const [selectedKey, setSelectedKey] = useState<string>("");
   const location = useLocation();
 
   useEffect(() => {

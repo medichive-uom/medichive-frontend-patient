@@ -17,7 +17,7 @@ const items: MenuProps["items"] = [
 const HeaderBar: React.FC = () => {
   return (
     <Header style={{ padding: 0, background: "#001529" }}>
-      <div style={{ float: "right", marginRight:"30px"}}>
+    <div style={{ float: "right", marginRight:"30px"}}> 
         <Dropdown menu={{ items }} placement="bottomRight">
           <Button type="primary">Saman Perera</Button>
         </Dropdown>
