@@ -28,13 +28,6 @@ const BookAppointment: React.FC = () => {
     console.log(instituteId,doctorId);
     navigate(`/bookappointment/doctor?instituteId=${instituteId}&doctorId=${doctorId}&date=${selectedDate}`);
   };
-  // const fetchAllDoctors = async () => {
-  //   // Fetch data from the server
-  //   const response = await axios.get(`http://localhost:8080/patient/doctors`);
-  //   console.log(response.data);
-  //   return response.data;
-  // }
-
 
   const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
     setSelectedDate(Array.isArray(dateString) ? dateString.join('') : dateString);
