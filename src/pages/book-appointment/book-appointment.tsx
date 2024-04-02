@@ -50,7 +50,6 @@ const BookAppointment: React.FC = () => {
 
       {searchPerformed && (
         <Layout style={{ backgroundColor: 'white' }}>
-          {/* Additional content to display after the search */}
           <h3>Available Doctors</h3>
           {availableDoctors.map((institute) => (
           <Table
