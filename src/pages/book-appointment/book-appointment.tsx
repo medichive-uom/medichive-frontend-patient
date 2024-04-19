@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DropDown from "../../components/dropDown";
+import DropDown from "./dropDown";
 import { Button, DatePickerProps, Layout, Table } from "antd";
 import { DatePicker } from "antd";
 import type { Dayjs } from 'dayjs';
@@ -15,9 +15,13 @@ const BookAppointment: React.FC = () => {
 
   // Function to fetch available doctors based on selected date
   const fetchData = async () => {
-    const response = await axios.get(`http://localhost:8080/patient/available-doctors?date=${selectedDate}`);
-    console.log(response.data);
-    return response.data;
+    try{
+      const response = await axios.get(`http://localhost:8080/patient/available-doctors?date=${selectedDate}`);
+      console.log(response.data);
+      return response.data;
+    }catch(error){
+      console.log(`Error fetching data: ${error}`);
+    }
   };
 
   // Function to handle search action
@@ -58,6 +62,7 @@ const BookAppointment: React.FC = () => {
           bordered
           title={() => `${institute.instituteDetails.instituteName}`}
           columns={[
+            {title: 'Date', dataIndex: 'date', width: 500}, 
             { title: 'Name', dataIndex: 'name', width: 500 },
             { title: 'Specialization',width: 500, dataIndex: 'specializations', render: (specializations: string[]) => specializations.join(', ') },
             {
