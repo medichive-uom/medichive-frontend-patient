@@ -66,9 +66,9 @@ const AvailableTimes: React.FC = () => {
       } else {
         alert('Error booking appointment');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
-      throw error; // Rethrow the error to handle it in the caller function
+      alert(error.response.data.message);
     }
   }
 
