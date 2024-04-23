@@ -1,22 +1,39 @@
 import React, { useState } from "react";
-import DropDown from "./dropDown";
-import { Button, DatePickerProps, Layout, Table } from "antd";
-import { DatePicker } from "antd";
-import type { Dayjs } from 'dayjs';
+import Filter from "./filter";
+import { Button,  Layout, Table } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const BookAppointment: React.FC = () => {
-  // State variables
-  const [searchPerformed, setSearchPerformed] = useState<boolean>(false);
+    // State variables
+  const [selectedDoctor, setSelectedDoctor] = useState<string>('');
+  const [selectedInstitute, setSelectedInstitute] = useState<string>('');
+  const [selectedSpecialization, setSelectedSpecialization] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [searchPerformed, setSearchPerformed] = useState<boolean>(false);
   const [availableDoctors, setAvailableDoctors] = useState<any[]>([]);
   const navigate = useNavigate();
 
   // Function to fetch available doctors based on selected date
   const fetchData = async () => {
     try{
-      const response = await axios.get(`http://localhost:8080/patient/available-doctors?date=${selectedDate}`);
+      console.log('data',selectedDoctor,selectedInstitute,selectedSpecialization,selectedDate)
+      const arr = [];
+      if(selectedDoctor){
+        arr.push(`doctorId=${selectedDoctor}`);
+      }
+      if(selectedInstitute){
+        arr.push(`instituteId=${selectedInstitute}`);
+      }
+      if(selectedSpecialization){
+        arr.push(`specializationId=${selectedSpecialization}`);
+      }
+      if(selectedDate){
+        arr.push(`date=${selectedDate}`);
+      }
+      const query = arr.join('&');
+      console.log('query',query);
+      const response = await axios.get(`http://localhost:8080/patient/available-doctors?${query}`);
       console.log(response.data);
       return response.data;
     }catch(error){
@@ -38,19 +55,17 @@ const BookAppointment: React.FC = () => {
     navigate(`/bookappointment/doctor?instituteId=${instituteId}&doctorId=${doctorId}&date=${selectedDate}`);
   };
 
-  // Function to handle date change in DatePicker
-  const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
-    setSelectedDate(Array.isArray(dateString) ? dateString.join('') : dateString);
-  };
+
 
   return (
     <Layout style={{ backgroundColor: 'white' }}>
       <h2>Book Appointments</h2>
-      <DropDown/>
-      <Layout style={{ marginTop: '10px', width: '200px', backgroundColor: 'white' }}>
-        <DatePicker style={{ width: '100%' }} onChange={onChange} />
-      </Layout>
-      <Button style={{ marginTop: '10px', width: '200px' }} type="primary" onClick={handleSearch}>Search</Button>
+      <Filter handleSearch={handleSearch} 
+      setSelectedDoctor={setSelectedDoctor} 
+      setSelectedInstitute={setSelectedInstitute}
+      setSelectedSpecialization={setSelectedSpecialization}
+      setSelectedDate={setSelectedDate}
+      />
 
       {searchPerformed && (
         <Layout style={{ backgroundColor: 'white' }}>
