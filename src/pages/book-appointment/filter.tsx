@@ -1,3 +1,8 @@
+    // Function to handle date change in DatePicker
+    const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
+      props.setSelectedDate(Array.isArray(dateString) ? dateString.join('') : dateString);
+    };
+
   useEffect(() => {
     const fetchData = async (url: string, setData: Function) => {
       try {
