@@ -1,3 +1,11 @@
+
+type FilterProps = {
+  handleSearch:Function;
+  setSelectedDoctor:Function;
+  setSelectedInstitute:Function;
+  setSelectedSpecialization:Function;
+  setSelectedDate:Function;
+};
     // Function to handle date change in DatePicker
     const onChange: DatePickerProps<Dayjs[]>['onChange'] = (_ , dateString) => {
       props.setSelectedDate(Array.isArray(dateString) ? dateString.join('') : dateString);
